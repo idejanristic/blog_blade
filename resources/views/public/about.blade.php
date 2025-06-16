@@ -1,4 +1,4 @@
-<x-public-layout>
+<x-public-layout title="about" desciption='nesto'>
     <x-slot name="header">
         <!-- Page Header -->
         <!-- Set your background image for this header on the line below. -->

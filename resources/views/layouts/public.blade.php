@@ -2,14 +2,17 @@
 <html lang="en">
 
 <head>
-    @include('public.partials.head')
+    @include('public.partials.head', [
+        'author' => $author,
+    ])
 </head>
 
 <body>
 
-    @include('public.partials.navbar')
-
-
+    @include('public.partials.navbar', [
+        'title' => $title,
+        'description' => $description,
+    ])
     <!-- Page Heading -->
     @isset($header)
         {{ $header }}
@@ -25,7 +28,7 @@
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
+<!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Page Footer -->
