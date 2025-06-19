@@ -24,12 +24,7 @@
     <hr>
 
     @include('public.partials.footer')
-
-    <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    @vite(['resources/js/public.js'])
 
     <!-- Page Footer -->
     @isset($footer)

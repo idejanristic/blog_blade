@@ -4,6 +4,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\PagesController;
+use App\Http\Controllers\Public\ArticlesController;
 
 Route::prefix('/')->name('public.')
     ->group(callback: function (): void {
@@ -21,6 +22,16 @@ Route::prefix('/')->name('public.')
             uri: '/contact',
             action: [PagesController::class, 'contact']
         )->name(name: 'contact');
+
+        Route::resource(
+            name: 'articles',
+            controller: ArticlesController::class
+        );
+
+        Route::get(
+            uri: 'articles/user/{name}',
+            action: [ArticlesController::class, 'user']
+        )->name(name: 'articles.user');
     });
 
 Route::get(

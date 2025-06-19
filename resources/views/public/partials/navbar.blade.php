@@ -10,11 +10,14 @@
             <x-navbar>
                 <x-navbar.link href="{{ route('public.home') }}" active="{{ request()->is('/') }}">Home</x-navbar.link>
 
+                <x-navbar.link href="{{ route('public.articles.index') }}"
+                    active="{{ request()->is('articles') }}">Blog</x-navbar.link>
+
                 <x-navbar.link href="{{ route('public.about') }}"
                     active="{{ request()->is('about') }}">About</x-navbar.link>
 
                 <x-navbar.link href="{{ route('public.contact') }}"
-                    active="{{ request()->is('contact') }}">About</x-navbar.link>
+                    active="{{ request()->is('contact') }}">Contact</x-navbar.link>
 
                 <!-- Authentication Links -->
                 @auth
