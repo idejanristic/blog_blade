@@ -25,6 +25,15 @@ class Article extends Model
         ];
     }
 
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -44,6 +53,6 @@ class Article extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(related: 'App\User');
+        return $this->belongsTo(related: 'App\Models\User');
     }
 }

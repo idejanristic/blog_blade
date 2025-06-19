@@ -8,6 +8,9 @@ class AuthorComposer
 {
     public function compose(View $view): void
     {
-        $view->with('author', 'Dejan Ristić');
+        $view->with(
+            key: 'author',
+            value: 'Dejan Ristić'
+        );
     }
 }
