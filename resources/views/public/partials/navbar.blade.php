@@ -21,6 +21,9 @@
 
                 <!-- Authentication Links -->
                 @auth
+                    <x-navbar.link href="{{ route('public.articles.create') }}"
+                        active="{{ request()->is('articles/create') }}">Add article</x-navbar.link>
+
                     <x-navbar.dropdown active="{{ request()->is('dashboard') }}">
                         <x-navbar.link href="{{ route('dashboard') }}">
                             <i class="fa fa-dashboard"></i> Dashboard

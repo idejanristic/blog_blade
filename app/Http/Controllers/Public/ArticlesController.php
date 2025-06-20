@@ -8,6 +8,8 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Articles\ArticleRequest;
+use Illuminate\Http\RedirectResponse;
 
 class ArticlesController extends Controller
 {
@@ -22,7 +24,9 @@ class ArticlesController extends Controller
      */
     public function index(): View
     {
-        $articles = Article::with(relations: 'user')->simplePaginate(perPage: 10);
+        $articles = Article::with(relations: 'user')
+            ->latest()
+            ->simplePaginate(perPage: 10);
 
         return view(
             view: 'public.articles.index',
@@ -56,17 +60,31 @@ class ArticlesController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): view
     {
-        //
+        return view('public.articles.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage
+     * 
+     * @param \App\Http\Requests\Articles\ArticleRequest $articleRequest
+     * @return mixed|RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ArticleRequest $articleRequest): RedirectResponse
     {
-        //
+        auth()->user()->articles()->create(
+            attributes: $articleRequest->only(
+                keys: [
+                    'title',
+                    'excerpt',
+                    'body',
+                    'published_at'
+                ]
+            )
+        );
+
+        return redirect()->route(route: 'public.articles.index');
     }
 
     /**
@@ -83,26 +101,54 @@ class ArticlesController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified resource
+     * 
+     * @param \App\Models\Article $article
+     * @return View
      */
-    public function edit(Article $article)
+    public function edit(Article $article): View
     {
-        //
+        return view(
+            view: 'public.articles.edit',
+            data: [
+                'article' => $article
+            ]
+        );
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage
+     * 
+     * @param \App\Http\Requests\Articles\ArticleRequest $articleRequest
+     * @param \App\Models\Article $article
+     * @return mixed|RedirectResponse
      */
-    public function update(Request $request, Article $article)
+    public function update(ArticleRequest $articleRequest, Article $article): RedirectResponse
     {
-        //
+        $article->update(
+            attributes: $articleRequest->only(
+                keys: [
+                    'title',
+                    'excerpt',
+                    'body',
+                    'published_at'
+                ]
+            )
+        );
+
+        return redirect()->route(route: 'public.articles.index');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage
+     * 
+     * @param \App\Models\Article $article
+     * @return mixed|RedirectResponse
      */
-    public function destroy(Article $article)
+    public function destroy(Article $article): RedirectResponse
     {
-        //
+        $article->delete();
+
+        return redirect()->route(route: 'public.articles.index');
     }
 }

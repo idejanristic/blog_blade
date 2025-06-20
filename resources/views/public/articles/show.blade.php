@@ -12,7 +12,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        <x-post.heading :article="$article"></x-post.heading>
+                        <x-post.heading :article="$article" :actions="true"></x-post.heading>
                     </div>
                 </div>
             </div>
