@@ -36,7 +36,7 @@
                     <x-post.input.group>
                         <x-post.input.label>Excerpt:</x-post.input.label>
                         <x-post.input.textarea id="excerpt" name="excerpt" :value="old('excerpt', $article->excerpt)"
-                            rows="2" id="editor" />
+                            rows="2" />
                         <x-post.input.error :message="$errors->first('excerpt')" class="mt-2" />
                     </x-post.input.group>
 
@@ -54,8 +54,7 @@
 
                     <x-post.input.group>
                         <x-post.input.label>Body:</x-post.input.label>
-                        <x-post.input.textarea id="body" name="body" :value="old('body', $article->body)" rows="10"
-                            id="editor2" />
+                        <x-post.input.textarea id="body" name="body" :value="old('body', $article->body)" rows="10" />
                         <x-post.input.error :message="$errors->first('body')" class="mt-2" />
                     </x-post.input.group>
 
@@ -70,21 +69,12 @@
     <!-- Footer -->
     <x-slot name="footer">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-        <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
         <script>
             $(document).ready(function () {
                 $(".selectTags").select2({
                     placeholder: "Select a tag",
                     maximumSelectionLength: 5
-                });
-
-                // var quill = new Quill('#editor', {
-                //     theme: 'snow'
-                // });
-
-                var quill2 = new Quill('#editor2', {
-                    theme: 'snow'
                 });
             });
         </script>
