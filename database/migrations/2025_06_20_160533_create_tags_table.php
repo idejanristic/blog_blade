@@ -12,20 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create(
-            table: 'articles',
+            table: 'tags',
             callback: function (Blueprint $table): void {
                 $table->id();
-                $table->foreignId(column: 'user_id')
-                    ->nullable()
-                    ->constrained(table: 'users', column: 'id')
-                    ->nullOnDelete()
-                    ->nullOnUpdate();
-                $table->string(column: 'title');
-                $table->string(column: 'slug')->unique();
-                $table->text(column: 'excerpt');
-                $table->text(column: 'body');
+                $table->string(column: 'name');
                 $table->string(column: 'source');
-                $table->timestamp(column: 'published_at');
                 $table->timestamps();
             }
         );
@@ -37,7 +28,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists(
-            table: 'articles'
+            table: 'tags'
         );
     }
 };

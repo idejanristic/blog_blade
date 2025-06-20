@@ -5,6 +5,7 @@
     @include('public.partials.head', [
         'author' => $author,
     ])
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -23,7 +24,7 @@
 
     <hr>
 
-    @include('public.partials.footer')
+@include('public.partials.footer')
     @vite(['resources/js/public.js'])
 
     <!-- Page Footer -->

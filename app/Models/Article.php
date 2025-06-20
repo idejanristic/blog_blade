@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Article extends Model
 {
@@ -57,6 +58,17 @@ class Article extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(related: 'App\Models\User');
+        return $this->belongsTo(related: User::class);
+    }
+
+    /**
+     * Get the tags associated with a given articles
+     * 
+     * @return BelongsToMany<Tag, Article, \Illuminate\Database\Eloquent\Relations\Pivot>
+     */
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(related: Tag::class)
+            ->withTimestamps();
     }
 }

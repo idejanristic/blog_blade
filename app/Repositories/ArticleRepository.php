@@ -19,9 +19,9 @@ class ArticleRepository
      */
     public function store(int $user_id, ArticleDto $dto): bool
     {
-        $arcticle = new Article();
+        $article = new Article();
 
-        $arcticle->fill(
+        $article->fill(
             attributes: [
                 'title' => $dto->title,
                 'excerpt' => $dto->excerpt,
@@ -32,7 +32,15 @@ class ArticleRepository
             ]
         );
 
-        return $arcticle->save();
+        $status = $article->save();
+
+        if (isset($status)) {
+            if (isset($dto->tags) && count(value: $dto->tags) > 0) {
+                $article->tags()->sync(ids: $dto->tags);
+            }
+        }
+
+        return $article->save();
     }
 
     /**
@@ -43,7 +51,7 @@ class ArticleRepository
      */
     public function update(Article $article, ArticleDto $dto): bool
     {
-        return $article->update(
+        $status =  $article->update(
             attributes: [
                 'title' => $dto->title,
                 'excerpt' => $dto->excerpt,
@@ -52,6 +60,14 @@ class ArticleRepository
                 'source' => $dto->source
             ]
         );
+
+        if ($status) {
+            if (isset($dto->tags) && count(value: $dto->tags) > 0) {
+                $article->tags()->sync(ids: $dto->tags);
+            }
+        }
+
+        return $status;
     }
 
     /**

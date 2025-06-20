@@ -22,7 +22,7 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' =>  User::inRandomOrder()->value('id'),
+            'user_id' =>  User::inRandomOrder()->value(column: 'id'),
             'title' => $this->faker->sentence,
             'excerpt' => $this->faker->paragraph,
             'body' => $this->faker->paragraphs(nb: 5, asText: true),

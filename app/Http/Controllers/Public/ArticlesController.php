@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use App\DataTransverObjects\ArticleDto;
 use App\Repositories\ArticleRepository;
 use App\Http\Requests\Articles\ArticleRequest;
+use App\Models\Tag;
 
 class ArticlesController extends Controller
 {
@@ -20,6 +21,7 @@ class ArticlesController extends Controller
         public ArticleRepository $articleRepository
     ) {
         view()->share(key: 'currentUser', value: Auth::user());
+        view()->share(key: 'tagList', value: Tag::all());
     }
     /**
      * Display a listing of the articles
@@ -67,7 +69,7 @@ class ArticlesController extends Controller
      */
     public function create(): view
     {
-        return view('public.articles.create');
+        return view(view: 'public.articles.create');
     }
 
     /**

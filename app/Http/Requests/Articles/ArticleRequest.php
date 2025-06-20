@@ -23,7 +23,7 @@ class ArticleRequest extends FormRequest
     {
         $segment = request()->segment(2);
 
-        $unique_title = is_null($segment) ? 'unique:articles' : 'unique:articles,title,' . $segment;
+        $unique_title = is_null($segment) ? 'unique:articles' : 'unique:articles,title,' . $segment . ',slug';
 
         return [
             'title' => 'required|min:3|max:255|' . $unique_title,
