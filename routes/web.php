@@ -29,7 +29,7 @@ Route::prefix('/')->name('public.')
         );
 
         Route::get(
-            uri: 'articles/user/{name}',
+            uri: 'articles/user/{user}',
             action: [ArticlesController::class, 'user']
         )->name(name: 'articles.user');
     });

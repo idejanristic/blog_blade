@@ -7,6 +7,7 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class ArticlesController extends Controller
 {
@@ -21,11 +22,34 @@ class ArticlesController extends Controller
      */
     public function index(): View
     {
-        $articles = Article::with(relations: 'user')->simplePaginate(10);
-        // dd($articles);
+        $articles = Article::with(relations: 'user')->simplePaginate(perPage: 10);
+
         return view(
             view: 'public.articles.index',
-            data: compact(var_name: 'articles')
+            data: [
+                'articles' => $articles
+            ]
+        );
+    }
+
+    /**
+     * Display a listing of the article that written by a user
+     * 
+     * @param \App\Models\User $user
+     * @return View
+     */
+    public function user(User $user): View
+    {
+        $articles = $user->articles()
+            ->latest()
+            ->simplePaginate(perPage: 10);
+
+        return view(
+            view: 'public.articles.user',
+            data: [
+                'articles' => $articles,
+                'user' => $user
+            ]
         );
     }
 
@@ -52,7 +76,9 @@ class ArticlesController extends Controller
     {
         return view(
             view: 'public.articles.show',
-            data: compact('article')
+            data: [
+                'article' => $article
+            ]
         );
     }
 

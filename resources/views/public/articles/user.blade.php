@@ -7,9 +7,9 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                         <div class="site-heading">
-                            <h1>Clean Blog</h1>
+                            <h1>Articles</h1>
                             <hr class="small">
-                            <span class="subheading">All articles from The clean blog</span>
+                            <span class="subheading"> written by {{ $user->name }}</span>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     @foreach ($articles as $article)
                         <x-post :article="$article">
                             <x-post.link />
-                            <x-post.meta />
+                            <x-post.meta :showUser="false" />
                         </x-post>
                         <hr>
                     @endforeach
