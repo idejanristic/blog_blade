@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ArticleSource;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -26,6 +27,7 @@ class ArticleFactory extends Factory
             'excerpt' => $this->faker->paragraph,
             'body' => $this->faker->paragraphs(nb: 5, asText: true),
             'published_at' => $this->faker->dateTimeBetween('-1 month', '+1 month'),
+            'source' => ArticleSource::Seed,
             'created_at' => now(),
             'updated_at' => now(),
         ];

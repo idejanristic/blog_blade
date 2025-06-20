@@ -21,8 +21,12 @@ class ArticleRequest extends FormRequest
      */
     public function rules(): array
     {
+        $segment = request()->segment(2);
+
+        $unique_title = is_null($segment) ? 'unique:articles' : 'unique:articles,title,' . $segment;
+
         return [
-            'title' => 'required|min:3|max:255',
+            'title' => 'required|min:3|max:255|' . $unique_title,
             'excerpt' => 'required|min:3',
             'body' => 'required',
             'published_at' => 'required|date|date_format:Y-m-d'

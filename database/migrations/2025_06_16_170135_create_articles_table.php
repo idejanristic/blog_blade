@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string(column: 'slug')->unique();
             $table->text(column: 'excerpt');
             $table->text(column: 'body');
+            $table->string(column: 'source');
             $table->timestamp(column: 'published_at');
             $table->timestamps();
         });

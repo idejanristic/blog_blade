@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ArticleSource;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,6 +28,7 @@ class Article extends Model
 
     protected $casts = [
         'published_at' => 'datetime',
+        'source' => ArticleSource::class
     ];
 
     public function getRouteKeyName(): string
@@ -43,7 +45,9 @@ class Article extends Model
         'title',
         'excerpt',
         'body',
-        'published_at'
+        'published_at',
+        'source',
+        'user_id'
     ];
 
     /**

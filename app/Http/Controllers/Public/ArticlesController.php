@@ -5,16 +5,20 @@ namespace App\Http\Controllers\Public;
 use Auth;
 use App\Models\User;
 use App\Models\Article;
-use Illuminate\Http\Request;
+use App\Services\ArticleService;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Articles\ArticleRequest;
 use Illuminate\Http\RedirectResponse;
+use App\DataTransverObjects\ArticleDto;
+use App\Repositories\ArticleRepository;
+use App\Http\Requests\Articles\ArticleRequest;
 
 class ArticlesController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(
+        public ArticleService $articleService,
+        public ArticleRepository $articleRepository
+    ) {
         view()->share(key: 'currentUser', value: Auth::user());
     }
     /**
@@ -24,9 +28,9 @@ class ArticlesController extends Controller
      */
     public function index(): View
     {
-        $articles = Article::with(relations: 'user')
-            ->latest()
-            ->simplePaginate(perPage: 10);
+        $articles = $this->articleRepository->allPublishedArticles(
+            perPage: 10
+        );
 
         return view(
             view: 'public.articles.index',
@@ -44,9 +48,10 @@ class ArticlesController extends Controller
      */
     public function user(User $user): View
     {
-        $articles = $user->articles()
-            ->latest()
-            ->simplePaginate(perPage: 10);
+        $articles = $this->articleRepository->allPublishedArticlesForUser(
+            user_id: $user->id,
+            perPage: 10
+        );
 
         return view(
             view: 'public.articles.user',
@@ -73,14 +78,9 @@ class ArticlesController extends Controller
      */
     public function store(ArticleRequest $articleRequest): RedirectResponse
     {
-        auth()->user()->articles()->create(
-            attributes: $articleRequest->only(
-                keys: [
-                    'title',
-                    'excerpt',
-                    'body',
-                    'published_at'
-                ]
+        $this->articleService->create(
+            dto: ArticleDto::fromAppRequest(
+                articleRequest: $articleRequest
             )
         );
 
@@ -125,14 +125,10 @@ class ArticlesController extends Controller
      */
     public function update(ArticleRequest $articleRequest, Article $article): RedirectResponse
     {
-        $article->update(
-            attributes: $articleRequest->only(
-                keys: [
-                    'title',
-                    'excerpt',
-                    'body',
-                    'published_at'
-                ]
+        $this->articleService->update(
+            article: $article,
+            dto: ArticleDto::fromAppRequest(
+                articleRequest: $articleRequest
             )
         );
 
@@ -147,7 +143,7 @@ class ArticlesController extends Controller
      */
     public function destroy(Article $article): RedirectResponse
     {
-        $article->delete();
+        $this->articleService->delete($article);
 
         return redirect()->route(route: 'public.articles.index');
     }
