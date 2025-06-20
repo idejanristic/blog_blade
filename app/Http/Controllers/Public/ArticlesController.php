@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Public;
 
 use Auth;
+use App\Models\User;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 
 class ArticlesController extends Controller
 {
