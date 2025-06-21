@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -55,5 +56,15 @@ class User extends Authenticatable
     public function articles(): HasMany
     {
         return $this->hasMany(related: 'App\Models\Article');
+    }
+
+    /**
+     * 
+     * @param \Illuminate\Database\Eloquent\Model $releted
+     * @return bool
+     */
+    public function own(Model $releted): bool
+    {
+        return $this->id === $releted->user_id;
     }
 }

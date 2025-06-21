@@ -7,16 +7,20 @@
         on {{ $article->published_at->format('F j, Y') }}</p>
 
     @if($actions)
-        <a class="btn btn-default btn-xs pull-left"
-            href="{{ route('public.articles.edit', ['article' => $article->slug]) }}">
-            <i class="fa fa-edit"></i> Update</a>
-        <form method="POST" action="{{ route('public.articles.destroy', ['article' => $article->slug]) }}">
-            @method('DELETE')
-            @csrf
-            <button type='submit' class='btn btn-danger btn-xs pull-left'>
-                <i class="fa fa-trash"></i>
-                Delete
-            </button>
-        </form>
+        @can('edit', $article)
+            <a class="btn btn-default btn-xs pull-left"
+                href="{{ route('public.articles.edit', ['article' => $article->slug]) }}">
+                <i class="fa fa-edit"></i> Update</a>
+        @endcan
+        @can('delete', $article)
+            <form method="POST" action="{{ route('public.articles.destroy', ['article' => $article->slug]) }}">
+                @method('DELETE')
+                @csrf
+                <button type='submit' class='btn btn-danger btn-xs pull-left'>
+                    <i class="fa fa-trash"></i>
+                    Delete
+                </button>
+            </form>
+        @endcan
     @endif
 </div>

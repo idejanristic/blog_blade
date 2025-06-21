@@ -13,9 +13,11 @@ use App\DataTransverObjects\ArticleDto;
 use App\Repositories\ArticleRepository;
 use App\Http\Requests\Articles\ArticleRequest;
 use App\Models\Tag;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ArticlesController extends Controller
 {
+    use AuthorizesRequests;
     public function __construct(
         public ArticleService $articleService,
         public ArticleRepository $articleRepository
@@ -119,6 +121,11 @@ class ArticlesController extends Controller
      */
     public function edit(Article $article): View
     {
+        $this->authorize(
+            ability: "edit",
+            arguments: $article
+        );
+
         return view(
             view: 'public.articles.edit',
             data: [
@@ -136,6 +143,11 @@ class ArticlesController extends Controller
      */
     public function update(ArticleRequest $articleRequest, Article $article): RedirectResponse
     {
+        $this->authorize(
+            ability: "update",
+            arguments: $article
+        );
+
         $this->articleService->update(
             article: $article,
             dto: ArticleDto::fromAppRequest(
@@ -154,6 +166,11 @@ class ArticlesController extends Controller
      */
     public function destroy(Article $article): RedirectResponse
     {
+        $this->authorize(
+            ability: "delete",
+            arguments: $article
+        );
+
         $this->articleService->delete($article);
 
         return redirect()->route(route: 'public.articles.index');
