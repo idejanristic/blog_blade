@@ -1,46 +1,11 @@
 <?php
 
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Public\PagesController;
-use App\Http\Controllers\Public\ArticlesController;
 
-Route::prefix('/')->name('public.')
-    ->group(callback: function (): void {
-        Route::get(
-            uri: '/',
-            action: [PagesController::class, 'home']
-        )->name(name: 'home');
+require __DIR__ . '/public/routes.php';
 
-        Route::get(
-            uri: '/about',
-            action: [PagesController::class, 'about']
-        )->name(name: 'about');
-
-        Route::get(
-            uri: '/contact',
-            action: [PagesController::class, 'contact']
-        )->name(name: 'contact');
-
-        Route::resource(
-            name: 'articles',
-            controller: ArticlesController::class
-        );
-
-        Route::get(
-            uri: 'articles/user/{user}',
-            action: [ArticlesController::class, 'user']
-        )->name(name: 'articles.user');
-    });
-
-Route::get(
-    '/dashboard',
-    function (): View {
-        return view('dashboard');
-    }
-)->middleware(['auth', 'verified'])->name('dashboard');
-
+require __DIR__ . '/dashboard/routes.php';
 
 Route::middleware('auth')->group(function (): void {
     Route::get(
