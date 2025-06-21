@@ -96,6 +96,12 @@ class ArticleRepository
             ->simplePaginate(perPage: $perPage);
     }
 
+    /**
+     * 
+     * @param int $user_id
+     * @param int $perPage
+     * @return \Illuminate\Contracts\Pagination\Paginator
+     */
     public function allPublishedArticlesForUser(int $user_id, int $perPage): Paginator
     {
         return Article::where(

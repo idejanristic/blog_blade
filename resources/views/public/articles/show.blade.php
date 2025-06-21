@@ -27,7 +27,12 @@
                     <h4>Tags:</h4>
                     <div>
                         @foreach($article->tags as $tag)
-                            <a href="#">{{ $tag->name }}</a>
+                            <a class="btn btn-default" href="{{ route('public.tags.articles', ['tag' => $tag->slug]) }}">
+                                {{ $tag->name }}
+                                <sup>
+                                    ({{ $tag->articles_count }})
+                                </sup>
+                            </a>
                         @endforeach
                     </div>
                     <br />

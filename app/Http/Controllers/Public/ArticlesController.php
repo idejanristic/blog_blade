@@ -90,10 +90,19 @@ class ArticlesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource
+     * 
+     * @param \App\Models\Article $article
+     * @return View
      */
-    public function show(Article $article)
+    public function show(Article $article): View
     {
+        $article->load(
+            relations: ['tags' => function ($query): void {
+                $query->withCount('articles');
+            }]
+        );
+
         return view(
             view: 'public.articles.show',
             data: [

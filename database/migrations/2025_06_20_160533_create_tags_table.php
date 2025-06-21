@@ -16,6 +16,7 @@ return new class extends Migration
             callback: function (Blueprint $table): void {
                 $table->id();
                 $table->string(column: 'name');
+                $table->string(column: 'slug')->unique(indexName: 'slug');
                 $table->string(column: 'source');
                 $table->timestamps();
             }
